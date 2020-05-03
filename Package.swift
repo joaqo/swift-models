@@ -21,6 +21,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.9.0"),
+        .package(url: "https://github.com/joaqo/SwiftCV.git", .branch("master")),
         .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMinor(from: "0.0.1")),
     ],
     targets: [
@@ -69,7 +70,7 @@ let package = Package(
             name: "MobileNetV2-Imagenette", dependencies: ["ImageClassificationModels", "Datasets"],
             path: "Examples/MobileNetV2-Imagenette"),
         .target(
-            name: "Personlab", dependencies: ["ImageClassificationModels", "Datasets"],
+            name: "Personlab", dependencies: ["ModelSupport", "SwiftCV"],
             path: "Examples/Personlab"),
         .target(
             name: "MiniGo", dependencies: ["ModelSupport"], path: "MiniGo", exclude: ["main.swift"]),
