@@ -27,6 +27,15 @@
           "revision": "da75a93ac017534e0028e83c0e4fc4610d2acf48",
           "version": "1.7.0"
         }
+      },
+      {
+        "package": "SwiftCV",
+        "repositoryURL": "https://github.com/joaqo/SwiftCV.git",
+        "state": {
+          "branch": "master",
+          "revision": "ccdb21e92690e78694b514be6e16a91915fb44aa",
+          "version": null
+        }
       }
     ]
   },

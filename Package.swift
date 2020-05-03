@@ -33,6 +33,7 @@ let package = Package(
         .executable(name: "TransformerDemo", targets: ["TransformerDemo"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/joaqo/SwiftCV.git", .branch("master")),
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.7.0"),
         .package(url: "https://github.com/kylef/Commander.git", from: "0.9.1"),
     ],
@@ -69,7 +70,7 @@ let package = Package(
             name: "MobileNet-Imagenette", dependencies: ["ImageClassificationModels", "Datasets"],
             path: "Examples/MobileNet-Imagenette"),
         .target(
-            name: "Personlab", dependencies: ["ImageClassificationModels", "Datasets"],
+            name: "Personlab", dependencies: ["ModelSupport", "SwiftCV"],
             path: "Examples/Personlab"),
         .target(
             name: "MiniGo", dependencies: ["ModelSupport"], path: "MiniGo", exclude: ["main.swift"]),
