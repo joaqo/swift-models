@@ -6,6 +6,7 @@ import ArgumentParser
 
 // TODO: Rethink this global config
 let config = Config()
+let device = Device.defaultXLA
 
 struct InferenceCommand: ParsableCommand {
   static var configuration = CommandConfiguration(
@@ -30,8 +31,10 @@ struct InferenceCommand: ParsableCommand {
     let ckpt = try! CheckpointReader(checkpointLocation: checkpointFile, modelName: "Personlab")
 
     // Define network and load pre trained weights
-    let backbone = MobileNetLikeBackbone(checkpoint: ckpt)
-    let personlabHeads = PersonlabHeads(checkpoint: ckpt)
+    var backbone = MobileNetLikeBackbone(checkpoint: ckpt)
+    var personlabHeads = PersonlabHeads(checkpoint: ckpt)
+    backbone.move(to: device)
+    personlabHeads.move(to: device)
 
     if let imagePath = imagePath {
       // Get preprocessed tensor
@@ -40,10 +43,11 @@ struct InferenceCommand: ParsableCommand {
       image = image.resized(to: config.inputImageSize)  // Adds a batch dimension automagically
       let normalizedImagesTensorBGR = image.tensor * (2.0 / 255.0) - 1.0
       let normalizedImagesTensorRGB = _Raw.reverse(normalizedImagesTensorBGR, dims: [false, false, false, true])
+      let inputTensor = Tensor(copying: normalizedImagesTensorRGB, to: device)
 
       // Run pose estimator
       let startTime = Date()
-      let convnetResults = personlabHeads(backbone(normalizedImagesTensorRGB))
+      let convnetResults = personlabHeads(backbone(inputTensor))
       let convnetTime = Date()
       let poseDecoder = PoseDecoder(for: convnetResults, with: config)
       let poses = poseDecoder.decode()
@@ -71,9 +75,10 @@ struct InferenceCommand: ParsableCommand {
         image = image.resized(to: config.inputImageSize)  // Adds a batch dimension automagically
         let normalizedImagesTensorBGR = image.tensor * (2.0 / 255.0) - 1.0
         let normalizedImagesTensorRGB = _Raw.reverse(normalizedImagesTensorBGR, dims: [false, false, false, true])
+        let inputTensor = Tensor(copying: normalizedImagesTensorRGB, to: device)
       
         // Run pose estimator
-        let convnetResults = personlabHeads(backbone(normalizedImagesTensorRGB))
+        let convnetResults = personlabHeads(backbone(inputTensor))
         let poseDecoder = PoseDecoder(for: convnetResults, with: config)
         let poses = poseDecoder.decode()
 
