@@ -21,7 +21,7 @@ let package = Package(
         .executable(name: "ResNet-CIFAR10", targets: ["ResNet-CIFAR10"]),
         .executable(name: "LeNet-MNIST", targets: ["LeNet-MNIST"]),
         .executable(name: "MobileNet-Imagenette", targets: ["MobileNet-Imagenette"]),
-        .executable(name: "Personlab", targets: ["Personlab"]),
+        .executable(name: "PersonLab", targets: ["PersonLab"]),
         .executable(name: "GAN", targets: ["GAN"]),
         .executable(name: "DCGAN", targets: ["DCGAN"]),
         .executable(name: "BERT-CoLA", targets: ["BERT-CoLA"]),
@@ -71,8 +71,8 @@ let package = Package(
             name: "MobileNet-Imagenette", dependencies: ["ImageClassificationModels", "Datasets"],
             path: "Examples/MobileNet-Imagenette"),
         .target(
-            name: "Personlab", dependencies: ["ModelSupport", "SwiftCV", .product(name: "ArgumentParser", package: "swift-argument-parser")],
-            path: "Examples/Personlab"),
+            name: "PersonLab", dependencies: ["ModelSupport", "SwiftCV", .product(name: "ArgumentParser", package: "swift-argument-parser")],
+            path: "Examples/PersonLab"),
         .target(
             name: "MiniGo", dependencies: ["ModelSupport"], path: "MiniGo", exclude: ["main.swift"]),
         .target(
