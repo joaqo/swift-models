@@ -20,8 +20,7 @@ let package = Package(
         .library(name: "MiniGo", targets: ["MiniGo"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.9.0"),
-        .package(url: "https://github.com/joaqo/SwiftCV.git", .branch("master")),
+        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.7.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMinor(from: "0.0.1")),
     ],
     targets: [
@@ -70,7 +69,7 @@ let package = Package(
             name: "MobileNetV2-Imagenette", dependencies: ["ImageClassificationModels", "Datasets"],
             path: "Examples/MobileNetV2-Imagenette"),
         .target(
-            name: "PersonLab", dependencies: ["ModelSupport", "SwiftCV", .product(name: "ArgumentParser", package: "swift-argument-parser")],
+            name: "PersonLab", dependencies: ["ModelSupport", .product(name: "ArgumentParser", package: "swift-argument-parser")],
             path: "PersonLab"),
         .target(
             name: "MiniGo", dependencies: ["ModelSupport"], path: "MiniGo", exclude: ["main.swift"]),
